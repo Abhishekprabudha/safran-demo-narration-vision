@@ -13,7 +13,7 @@ const narrationCues = [
   {
     start: 0,
     end: 12,
-    caption: 'AIonOS opens with Safran\'s production floor and shows how existing CCTV feeds can be turned into one live operational cockpit.',
+    caption: 'AIonOS opens with a production floor view and shows how existing CCTV feeds can be turned into one live operational cockpit.',
   },
   {
     start: 12,
@@ -48,7 +48,7 @@ const narrationCues = [
   {
     start: 93,
     end: 107,
-    caption: 'Taken together, Safran Vision Agents turn CCTV into a production intelligence layer for operations control, productivity improvement, safety, and compliance.',
+    caption: 'Taken together, vision agents turn CCTV into a production intelligence layer for operations control, productivity improvement, safety, and compliance.',
   },
 ];
 
