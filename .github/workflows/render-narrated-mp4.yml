@@ -1,0 +1,65 @@
+name: Render narrated MP4
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - assets/safran-vision-agent-demo.webm
+      - assets/demo-narration.mp3
+      - .github/workflows/render-narrated-mp4.yml
+
+permissions:
+  contents: write
+
+jobs:
+  render-mp4:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify media inputs
+        run: |
+          test -f assets/safran-vision-agent-demo.webm
+          test -f assets/demo-narration.mp3
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
+
+      - name: Render narrated MP4
+        run: |
+          # Adjust crop if the source capture includes browser chrome.
+          # Example: crop=iw:ih-120:0:120
+          CROP_FILTER="scale=trunc(iw/2)*2:trunc(ih/2)*2"
+
+          ffmpeg -y \
+            -stream_loop -1 -i assets/safran-vision-agent-demo.webm \
+            -i assets/demo-narration.mp3 \
+            -map 0:v:0 -map 1:a:0 \
+            -vf "${CROP_FILTER}" \
+            -c:v libx264 -pix_fmt yuv420p -preset medium -crf 20 \
+            -c:a aac -b:a 192k \
+            -shortest \
+            assets/safran-vision-agent-demo-narrated.mp4
+
+      - name: Commit rendered MP4
+        run: |
+          if [[ ! -f assets/safran-vision-agent-demo-narrated.mp4 ]]; then
+            echo "Rendered MP4 is missing."
+            exit 1
+          fi
+
+          if [[ -z "$(git status --porcelain -- assets/safran-vision-agent-demo-narrated.mp4)" ]]; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/safran-vision-agent-demo-narrated.mp4
+          git commit -m "chore: render narrated mp4"
+          git push
