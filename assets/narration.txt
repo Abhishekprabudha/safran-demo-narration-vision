@@ -1,4 +1,4 @@
-AIonOS opens with Safran's production floor and shows how existing CCTV feeds can be turned into one live operational cockpit.
+AIonOS opens with a production floor view and shows how existing CCTV feeds can be turned into one live operational cockpit.
 
 The vision layer watches every zone continuously, converting camera footage into counts, movement patterns, congestion signals, and station-level status.
 
@@ -12,4 +12,4 @@ Instead of just showing footage, the cockpit recommends action: rebalance work, 
 
 Managers can move from camera view to decision view, using AI reasoning to understand why throughput is slipping and what to change next.
 
-Taken together, Safran Vision Agents turn CCTV into a production intelligence layer for operations control, productivity improvement, safety, and compliance.
+Taken together, vision agents turn CCTV into a production intelligence layer for operations control, productivity improvement, safety, and compliance.

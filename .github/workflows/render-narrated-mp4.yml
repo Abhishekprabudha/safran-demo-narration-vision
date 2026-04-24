@@ -32,9 +32,9 @@ jobs:
 
       - name: Render narrated MP4
         run: |
-          # Adjust crop if the source capture includes browser chrome.
-          # Example: crop=iw:ih-120:0:120
-          CROP_FILTER="scale=trunc(iw/2)*2:trunc(ih/2)*2"
+          # Trim browser chrome/ribbons in the source capture (top URL bar + bottom ribbon)
+          # before scaling to codec-safe even dimensions.
+          CROP_FILTER="crop=iw:ih-176:0:96,scale=trunc(iw/2)*2:trunc(ih/2)*2"
 
           ffmpeg -y \
             -stream_loop -1 -i assets/safran-vision-agent-demo.webm \
